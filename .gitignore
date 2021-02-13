@@ -1,3 +1,14 @@
+# Bazel
+bazel-out
+bazel-testlogs
+bazel-workspace
+bazel-genfiles
+
+# temporary files
+*.swp
+*.swo
+*.swn
+
 # Prerequisites
 *.d
 
