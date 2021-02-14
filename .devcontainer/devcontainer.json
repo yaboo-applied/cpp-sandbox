@@ -31,5 +31,7 @@
 		"ms-vscode.cpptools",
 		"ms-azuretools.vscode-docker",
 		"bazelbuild.vscode-bazel",
+		"zxh404.vscode-proto3",
+		"xaver.clang-format",
 	]
 }

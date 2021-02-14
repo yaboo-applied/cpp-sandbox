@@ -16,11 +16,13 @@ licenses(["notice"])  # 3-clause BSD
 
 
 load("@com_grail_bazel_compdb//:aspects.bzl", "compilation_database")
+load("@com_github_grpc_grpc//bazel:grpc_build_system.bzl", "grpc_cc_binary", "grpc_cc_library", "grpc_cc_test", "grpc_package")
+
 
 compilation_database(
     name = "example_compdb",
     targets = [
-        "//protos:helloworld_cc_grpc"
+        "//protos:helloworld"
     ],
 )
 
@@ -30,7 +32,7 @@ cc_binary(
     defines = ["BAZEL_BUILD"],
     deps = [
         "@com_github_grpc_grpc//:grpc++",
-        "//protos:helloworld_cc_grpc",
+        "//protos:helloworld",
     ],
 )
 
@@ -40,7 +42,7 @@ cc_binary(
     defines = ["BAZEL_BUILD"],
     deps = [
         "@com_github_grpc_grpc//:grpc++",
-        "//protos:helloworld_cc_grpc",
+        "//protos:helloworld",
     ],
 )
 
@@ -50,7 +52,7 @@ cc_binary(
     defines = ["BAZEL_BUILD"],
     deps = [
         "@com_github_grpc_grpc//:grpc++",
-        "//protos:helloworld_cc_grpc",
+        "//protos:helloworld",
     ],
 )
 
@@ -61,7 +63,7 @@ cc_binary(
     deps = [
         "@com_github_grpc_grpc//:grpc++",
         "@com_github_grpc_grpc//:grpc++_reflection",
-        "//protos:helloworld_cc_grpc",
+        "//protos:helloworld",
     ],
 )
 
@@ -71,6 +73,21 @@ cc_binary(
     defines = ["BAZEL_BUILD"],
     deps = [
         "@com_github_grpc_grpc//:grpc++",
-        "//protos:helloworld_cc_grpc",
+        "//protos:helloworld",
+    ],
+)
+
+grpc_cc_test(
+    name = "greeter_client_test",
+    srcs = ["greeter_client_test.cc"],
+    deps = [
+        "@com_github_grpc_grpc//:gpr",
+        "@com_github_grpc_grpc//:grpc",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_github_grpc_grpc//:grpc++_test",
+        "@com_github_grpc_grpc//test/core/util:grpc_test_util",
+        "@com_github_grpc_grpc//test/cpp/util:test_util",
+        "@com_google_googletest//:gtest",
+        "//protos:helloworld",
     ],
 )

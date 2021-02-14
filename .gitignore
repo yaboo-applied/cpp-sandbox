@@ -1,4 +1,5 @@
 # Bazel
+bazel-bin
 bazel-out
 bazel-testlogs
 bazel-workspace
@@ -41,3 +42,7 @@ bazel-genfiles
 *.exe
 *.out
 *.app
+
+# Python
+__pycache__
+*.pyc
