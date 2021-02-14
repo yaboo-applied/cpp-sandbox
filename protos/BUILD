@@ -19,26 +19,33 @@ grpc_proto_library(
 
 # The following three rules demonstrate the usage of the cc_grpc_library rule in
 # in a mode compatible with the native proto_library and cc_proto_library rules.
-proto_library(
-    name = "helloworld_proto",
+# proto_library(
+#     name = "helloworld_proto",
+#     srcs = ["helloworld.proto"],
+# )
+
+# cc_proto_library(
+#     name = "helloworld_cc_proto",
+#     deps = [":helloworld_proto"],
+# )
+
+# cc_grpc_library(
+#     name = "helloworld_cc_grpc",
+#     srcs = [":helloworld_proto"],
+#     grpc_only = True,
+#     deps = [":helloworld_cc_proto"],
+# )
+
+grpc_proto_library(
+    name = "helloworld",
     srcs = ["helloworld.proto"],
-)
-
-cc_proto_library(
-    name = "helloworld_cc_proto",
-    deps = [":helloworld_proto"],
-)
-
-cc_grpc_library(
-    name = "helloworld_cc_grpc",
-    srcs = [":helloworld_proto"],
-    grpc_only = True,
-    deps = [":helloworld_cc_proto"],
+    generate_mocks = True,
 )
 
 grpc_proto_library(
     name = "route_guide",
     srcs = ["route_guide.proto"],
+    generate_mocks = True,
 )
 
 proto_library(
