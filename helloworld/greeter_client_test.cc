@@ -90,6 +90,18 @@ TEST_F(MockCallbackTest, MockedCallSucceeds) {
   EXPECT_TRUE(peer.test_status().ok());
 }
 
+TEST_F(MockCallbackTest, MockedCallFails) {
+  experimental::CallbackServerContext ctx;
+  HelloRequest req;
+  HelloReply resp;
+  DefaultReactorTestPeer peer(&ctx);
+
+  auto* reactor = service_.SayHello(&ctx, &req, &resp);
+  EXPECT_EQ(reactor, peer.reactor());
+  EXPECT_TRUE(peer.test_status_set());
+  EXPECT_EQ(peer.test_status().error_code(), StatusCode::INVALID_ARGUMENT);
+}
+
 class TestServiceImpl : public Greeter::Service {
  public:
   Status SayHello(ServerContext* /*context*/, const HelloRequest* request,
