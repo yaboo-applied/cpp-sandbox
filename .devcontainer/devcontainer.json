@@ -31,6 +31,5 @@
 		"xaver.clang-format",
 		"ms-vscode.cmake-tools",
 		"twxs.cmake",
-		"matepek.vscode-catch2-test-adapter",
 	]
 }
