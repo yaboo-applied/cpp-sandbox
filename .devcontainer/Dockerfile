@@ -4,9 +4,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        cmake build-essential autoconf libtool pkg-config \
-        autogen libtool automake curl git gdb ca-certificates \
-        protobuf-compiler clang gnupg g++-8
+    cmake build-essential autoconf libtool pkg-config \
+    autogen libtool automake curl git gdb ca-certificates \
+    protobuf-compiler clang gnupg g++-8
 
 WORKDIR /tmp
 
@@ -35,6 +35,11 @@ RUN export INSTALL_DIR="/usr/local/bin" && export VERSION="0.4.5" \
     && cd ${INSTALL_DIR} \
     && curl -L "https://github.com/grailbio/bazel-compilation-database/archive/${VERSION}.tar.gz" | tar -xz \
     && ln -f -s "${INSTALL_DIR}/bazel-compilation-database-${VERSION}/generate.sh" bazel-compdb
+
+# Compile and install gtest-1.10.0
+RUN git clone -b release-1.10.0 https://github.com/google/googletest.git \
+    && cd googletest && mkdir build && cd build && cmake .. && make install \
+    && cd /tmp && rm -r googletest
 
 # ### Install protobuf and grpc
 # WORKDIR /tmp
