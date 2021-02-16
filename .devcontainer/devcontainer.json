@@ -1,8 +1,8 @@
 {
 	"name": "cpp-sandbox-container",
 	"dockerFile": "Dockerfile",
-	"workspaceFolder": "/workspace",
-	"workspaceMount": "type=bind,source=${localWorkspaceFolder},target=/workspace",
+	"workspaceFolder": "/home/vscode/workspace",
+	"workspaceMount": "type=bind,source=${localWorkspaceFolder},target=/home/vscode/workspace",
 	"runArgs": [
 		"--cap-add=SYS_PTRACE",
 		"--security-opt",
@@ -21,7 +21,7 @@
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "gcc -v",
 	// Comment out the next line if you want to run as root instead
-	// "remoteUser": "vscode",
+	"remoteUser": "vscode",
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
 		"ms-vscode.cpptools",

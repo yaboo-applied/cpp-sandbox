@@ -41,30 +41,13 @@ RUN git clone -b release-1.10.0 https://github.com/google/googletest.git \
     && cd googletest && mkdir build && cd build && cmake .. && make install \
     && cd /tmp && rm -r googletest
 
-# ### Install protobuf and grpc
-# WORKDIR /tmp
-# RUN git clone https://github.com/grpc/grpc.git
-# WORKDIR /tmp/grpc
-# RUN git checkout remotes/origin/v1.30.x
-# RUN git submodule update --init
+# User setting
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-# WORKDIR /tmp/grpc/third_party/protobuf
-# RUN git checkout remotes/origin/3.12.x
-# RUN ./autogen.sh
-# RUN ./configure CXXFLAGS=-fPIC --prefix=/usr/local/bin/protobuf/protobuf-dev
-# RUN make -j4
-# RUN make install
-
-# WORKDIR /tmp/grpc/
-# RUN export PKG_CONFIG_PATH=/usr/local/bin/protobuf/protobuf-dev/lib/pkgconfig:/usr/local/bin/grpc/grpc-dev/lib/pkgconfig
-# RUN export PATH=/usr/local/bin/protobuf/protobuf-dev/bin:/usr/local/bin/grpc/grpc-dev/bin:$PATH
-# RUN export LD_LIBRARY_PATH=/usr/local/bin/protobuf/protobuf-dev/lib:/usr/local/bin/grpc/grpc-dev/lib
-# RUN EXTRA_LDFLAGS=-L/usr/local/bin/protobuf/protobuf-dev/lib make -j4
-# RUN make prefix=/usr/local/bin/grpc/grpc-dev install
-
-# RUN echo /usr/local/bin/protobuf/protobuf-dev/lib | tee -a /etc/ld.so.conf.d/grpc.conf \
-#   && echo /usr/local/bin/grpc/grpc-dev/lib | tee -a /etc/ld.so.conf.d/grpc.conf \
-#   && ldconfig
-
-WORKDIR /workspace
-ENTRYPOINT /bin/bash
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
